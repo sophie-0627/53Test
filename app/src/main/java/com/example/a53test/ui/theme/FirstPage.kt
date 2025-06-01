@@ -1,5 +1,6 @@
 package com.example.a53test.ui.theme
 
+import android.graphics.pdf.PdfDocument.Page
 import android.icu.text.IDNA.Info
 import com.example.a53test.R
 import android.util.Log
@@ -38,68 +39,69 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.a53test.All
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Change() {
+fun Change(viewModel: AllViewModel) {
     var drawer = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var Screen = rememberNavController()
 
+    var currentBackStackEntry = Screen.currentBackStackEntryAsState()
+    var currentRouter = currentBackStackEntry.value?.destination?.route
+    var showScaffold = if(currentRouter != "Click"||currentRouter != All.聯絡我們.name) true else false
+
+    if(showScaffold){
     ModalNavigationDrawer(
         drawerState = drawer,
-        gesturesEnabled = false,
         drawerContent = {
             ModalDrawerSheet {
                 Inside(drawer, scope, Screen)
             }
         }
     ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    navigationIcon = {
-                        IconButton(
-                            onClick = { scope.launch { drawer.open() } },
-                            modifier = Modifier.size(40.dp)
-                        ) {
-                            Icon(
-                                painter = painterResource(R.drawable.baseline_menu_24),
-                                tint = Color(0xFF005E86),
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        navigationIcon = {
+                            IconButton(
+                                onClick = { scope.launch { drawer.open() } },
+                                modifier = Modifier.size(40.dp)
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.baseline_menu_24),
+                                    tint = Color(0xFF005E86),
+                                    contentDescription = ""
+                                )
+                            }
+                        },
+                        title = {
+                            Image(
+                                modifier = Modifier.width(300.dp),
+                                painter = painterResource(R.drawable.p),
                                 contentDescription = ""
                             )
                         }
-                    },
-                    title = {
-                        Image(
-                            modifier = Modifier.width(300.dp),
-                            painter = painterResource(R.drawable.p),
-                            contentDescription = ""
-                        )
-                    }
-                )
-            }
-        ) { innerPadding ->
-            Column(
-                modifier = Modifier.padding(innerPadding)
-            ) {
-                NavHost(navController = Screen, startDestination = All.主畫面.name) {
-                    composable(All.經營者.name) { Person(Screen) }
-                    composable(All.展館介紹.name) { Info(Screen) }
-                    composable(All.樓層立體圖.name) { Floor(Screen) }
-                    composable(All.公共藝術.name) { ART(Screen) }
-                    composable(All.聯絡我們.name) {  }
-                    composable(All.全部票卡.name) {  }
-                    composable(All.主畫面.name) { Main(Screen) }
+                    )
+                }
+            ) { innerPadding ->
+                Column(
+                    modifier = Modifier.padding(innerPadding)
+                ) {
+                    ALLNavHost(Screen,viewModel)
                 }
             }
         }
+    }
+    else {
+        ALLNavHost(Screen,viewModel)
     }
 }
 

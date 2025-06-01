@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.util.Log
 import android.util.SparseArray
+import android.view.View
 import android.view.animation.AlphaAnimation
 import androidx.annotation.ColorRes
 import androidx.compose.foundation.Image
@@ -44,7 +45,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -52,7 +57,7 @@ import com.google.gson.reflect.TypeToken
 import com.google.gson.Gson
 
 @Composable
-fun JsonOne(navController: NavController) {
+fun JsonOne(navController: NavController,viewModel: AllViewModel) {
     val context = LocalContext.current
     val json = context.assets.open("test2.json").bufferedReader().use { it.readText() }
     val test = object : TypeToken<List<One>>() {}.type
@@ -99,8 +104,11 @@ fun JsonOne(navController: NavController) {
                     modifier = Modifier
                         .padding(start = 20.dp,end = 5.dp)
                         .clickable {
-                            navController.navigate("pagetwo")
-                           //PageTwo(item.title.toString(),item.dateTime.toString().replace('.', '/'), item.hall,item.content.toString())
+                            viewModel.title = item.title.toString()
+                            viewModel.dateTime = item.dateTime.toString().replace('.', '/')
+                            viewModel.hall = item.hall
+                            viewModel.content = item.content.toString()
+                            navController.navigate("Click")
                         }
                         .weight(1f),
                     fontWeight = FontWeight.Bold,

@@ -79,15 +79,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.a53test.All
 import com.example.a53test.ui.theme.JsonOne
 import com.example.a53test.ui.theme._53TestTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-
 @Composable
-fun Main(navController: NavController) {
+fun Main(navController: NavController,viewModel: AllViewModel) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -132,7 +130,7 @@ fun Main(navController: NavController) {
         }
 
         Text("媒體中心", fontSize = 23.sp, modifier = Modifier.padding(10.dp),fontWeight = FontWeight.Bold)
-        JsonOne(navController)
+        JsonOne(navController,viewModel)
         Text("購票資訊", fontSize = 23.sp, modifier = Modifier.padding(start = 10.dp),fontWeight = FontWeight.Bold)
 
         Box(
