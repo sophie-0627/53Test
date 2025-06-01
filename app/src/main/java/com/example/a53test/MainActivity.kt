@@ -4,11 +4,13 @@
 package com.example.a53test
 
 import android.os.Bundle
+import android.webkit.WebView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -20,32 +22,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Page()
+            Change()
         }
     }
 }
 
 enum class All{
-    page1,
-    關於展覽,
+    經營者,
+    展館介紹,
     樓層立體圖,
     公共藝術,
     聯絡我們,
     全部票卡,
-    主畫面
-}
-
-@Composable
-fun Page(){
-    var page = rememberNavController()
-
-    NavHost(navController = page, startDestination = "page1"){
-        composable("page1"){ Change(page) }
-        composable("關於展覽") {  }
-        composable("樓層立體圖") {  }
-        composable("公共藝術") { ART(page) }
-        composable("聯絡我們") {  }
-        composable("全部票卡") {  }
-        composable("主畫面") {  }
-    }
+    主畫面,
 }

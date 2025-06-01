@@ -1,10 +1,12 @@
 package com.example.a53test.ui.theme
 
+import android.icu.text.IDNA.Info
 import com.example.a53test.R
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,31 +27,37 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.a53test.All
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Change(
-    navController: NavController,
-    //content: @Composable (NavController,PaddingValues) -> Unit
-) {
+fun Change() {
     var drawer = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    var Screen = rememberNavController()
 
     ModalNavigationDrawer(
         drawerState = drawer,
+        gesturesEnabled = false,
         drawerContent = {
             ModalDrawerSheet {
-                Inside(drawer, scope, navController)
+                Inside(drawer, scope, Screen)
             }
         }
     ) {
@@ -78,7 +86,19 @@ fun Change(
                 )
             }
         ) { innerPadding ->
-            Main(navController,innerPadding)
+            Column(
+                modifier = Modifier.padding(innerPadding)
+            ) {
+                NavHost(navController = Screen, startDestination = All.主畫面.name) {
+                    composable(All.經營者.name) { Person(Screen) }
+                    composable(All.展館介紹.name) { Info(Screen) }
+                    composable(All.樓層立體圖.name) { Floor(Screen) }
+                    composable(All.公共藝術.name) { ART(Screen) }
+                    composable(All.聯絡我們.name) {  }
+                    composable(All.全部票卡.name) {  }
+                    composable(All.主畫面.name) { Main(Screen) }
+                }
+            }
         }
     }
 }
@@ -90,36 +110,54 @@ fun Inside(drawer: DrawerState, scope: CoroutineScope, navController: NavControl
 
     LazyColumn {
         items(list) { item ->
-            Row(
-                modifier = Modifier
-                    .padding(start = 20.dp)
-                    .padding(10.dp)
-                    .size(height = 20.dp, width = 100.dp)
-                    .clickable {
-                        scope.launch { drawer.close() }
-                        Log.d("", item)
-                        navController.navigate(item)
-                    },
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.baseline_square_24),
-                    tint = Color(0xFF025872),
-                    contentDescription = "",
-                )
-                Text(item, fontSize = 15.sp)
+            if(item == "關於展覽"){
+                Row(
+                    modifier = Modifier
+                        .padding(start = 20.dp)
+                        .padding(10.dp)
+                        .size(height = 20.dp, width = 100.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.baseline_square_24),
+                        tint = Color(0xFF025872),
+                        contentDescription = "",
+                    )
+                    Text(item, fontSize = 15.sp)
+                }
+            } else {
+                Row(
+                    modifier = Modifier
+                        .padding(start = 20.dp)
+                        .padding(10.dp)
+                        .size(height = 20.dp, width = 100.dp)
+                        .clickable {
+                            scope.launch{ drawer.close() }
+                            navController.navigate(item)
+                        },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.baseline_square_24),
+                        tint = Color(0xFF025872),
+                        contentDescription = "",
+                    )
+                    Text(item, fontSize = 15.sp)
+                }
             }
+
             if (item == "關於展覽") {
                 information.forEach {
+                    var text = if (it == "經營者") All.經營者.name else  All.展館介紹.name
                     Row(
                         modifier = Modifier
                             .padding(start = 45.dp)
                             .width(100.dp)
                             .size(height = 20.dp, width = 100.dp)
                             .clickable {
-                                scope.launch { drawer.close() }
-
-                                       },
+                                scope.launch{ drawer.close() }
+                                navController.navigate(text)
+                            },
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
