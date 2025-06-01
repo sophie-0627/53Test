@@ -14,7 +14,7 @@ fun ALLNavHost(navController: NavHostController,viewModel: AllViewModel) {
         composable(All.樓層立體圖.name) { Floor(navController) }
         composable(All.公共藝術.name) { ART(navController) }
         composable(All.聯絡我們.name) { Us(navController) }
-        composable(All.全部票卡.name) {  }
+        composable(All.全部票卡.name) { Ticket() }
         composable(All.主畫面.name) { Main(navController,viewModel) }
         composable("Click") { PageTwo(navController,viewModel) }
     }

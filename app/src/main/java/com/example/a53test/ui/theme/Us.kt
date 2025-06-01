@@ -59,7 +59,8 @@ fun Us(navController: NavController) {
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent
             ),
-
+            modifier = Modifier.border(2.dp,Color(0xFF1AAB9E))
+                .size(height = 45.dp, width = 300.dp)
         )
 
         SP(size)
@@ -68,6 +69,12 @@ fun Us(navController: NavController) {
             value = name,
             onValueChange = { name = it },
             label = { Text("姓名") },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent
+            ),
+            modifier = Modifier.border(2.dp,Color(0xFF1AAB9E))
+                .size(height = 45.dp, width = 300.dp)
         )
 
         SP(size)
@@ -76,6 +83,12 @@ fun Us(navController: NavController) {
             value = email,
             onValueChange = { email = it },
             label = { Text("Email") },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent
+            ),
+            modifier = Modifier.border(2.dp,Color(0xFF1AAB9E))
+                .size(height = 45.dp, width = 300.dp)
         )
 
         SP(size)
@@ -84,6 +97,12 @@ fun Us(navController: NavController) {
             value = phone,
             onValueChange = { phone = it },
             label = { Text("電話") },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent
+            ),
+            modifier = Modifier.border(2.dp,Color(0xFF1AAB9E))
+                .size(height = 45.dp, width = 300.dp)
         )
 
         SP(size)
@@ -92,6 +111,12 @@ fun Us(navController: NavController) {
             value = Information,
             onValueChange = { Information = it },
             label = { Text("內容") },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent
+            ),
+            modifier = Modifier.border(2.dp,Color(0xFF1AAB9E))
+                .size(height = 45.dp, width = 300.dp)
         )
 
         SP(30)
@@ -103,7 +128,7 @@ fun Us(navController: NavController) {
             Information = ""
         },
             shape = RoundedCornerShape(3.dp),
-            modifier = Modifier.size(height = 45.dp, width =250.dp ),
+            modifier = Modifier.size(height = 45.dp, width = 220.dp ),
             colors = ButtonDefaults.buttonColors(Color(0xFF025872))
         ) {
             Text("重填")
@@ -131,7 +156,7 @@ fun Us(navController: NavController) {
             }
         },
             shape = RoundedCornerShape(3.dp),
-            modifier = Modifier.size(height = 45.dp, width = 250.dp ),
+            modifier = Modifier.size(height = 45.dp, width = 220.dp ),
             colors = ButtonDefaults.buttonColors(Color(0xFF025872))
         ) {
             Text("送出")

@@ -56,17 +56,18 @@ fun Change(viewModel: AllViewModel) {
 
     var currentBackStackEntry = Screen.currentBackStackEntryAsState()
     var currentRouter = currentBackStackEntry.value?.destination?.route
-    var showScaffold = if(currentRouter != "Click"||currentRouter != All.聯絡我們.name) true else false
+    var showScaffold =
+        if (currentRouter != "Click" || currentRouter != All.聯絡我們.name) true else false
 
-    if(showScaffold){
-    ModalNavigationDrawer(
-        drawerState = drawer,
-        drawerContent = {
-            ModalDrawerSheet {
-                Inside(drawer, scope, Screen)
+    if (showScaffold) {
+        ModalNavigationDrawer(
+            drawerState = drawer,
+            drawerContent = {
+                ModalDrawerSheet {
+                    Inside(drawer, scope, Screen)
+                }
             }
-        }
-    ) {
+        ) {
             Scaffold(
                 topBar = {
                     TopAppBar(
@@ -95,13 +96,12 @@ fun Change(viewModel: AllViewModel) {
                 Column(
                     modifier = Modifier.padding(innerPadding)
                 ) {
-                    ALLNavHost(Screen,viewModel)
+                    ALLNavHost(Screen, viewModel)
                 }
             }
         }
-    }
-    else {
-        ALLNavHost(Screen,viewModel)
+    } else {
+        ALLNavHost(Screen, viewModel)
     }
 }
 
@@ -112,7 +112,7 @@ fun Inside(drawer: DrawerState, scope: CoroutineScope, navController: NavControl
 
     LazyColumn {
         items(list) { item ->
-            if(item == "關於展覽"){
+            if (item == "關於展覽") {
                 Row(
                     modifier = Modifier
                         .padding(start = 20.dp)
@@ -134,7 +134,7 @@ fun Inside(drawer: DrawerState, scope: CoroutineScope, navController: NavControl
                         .padding(10.dp)
                         .size(height = 20.dp, width = 100.dp)
                         .clickable {
-                            scope.launch{ drawer.close() }
+                            scope.launch { drawer.close() }
                             navController.navigate(item)
                         },
                     verticalAlignment = Alignment.CenterVertically
@@ -150,14 +150,14 @@ fun Inside(drawer: DrawerState, scope: CoroutineScope, navController: NavControl
 
             if (item == "關於展覽") {
                 information.forEach {
-                    var text = if (it == "經營者") All.經營者.name else  All.展館介紹.name
+                    var text = if (it == "經營者") All.經營者.name else All.展館介紹.name
                     Row(
                         modifier = Modifier
                             .padding(start = 45.dp)
                             .width(100.dp)
                             .size(height = 20.dp, width = 100.dp)
                             .clickable {
-                                scope.launch{ drawer.close() }
+                                scope.launch { drawer.close() }
                                 navController.navigate(text)
                             },
                         verticalAlignment = Alignment.CenterVertically
