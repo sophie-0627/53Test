@@ -49,15 +49,14 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Change(viewModel: AllViewModel) {
+fun Change(viewModel: AllViewModel,db:UserData) {
     var drawer = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var Screen = rememberNavController()
 
     var currentBackStackEntry = Screen.currentBackStackEntryAsState()
     var currentRouter = currentBackStackEntry.value?.destination?.route
-    var showScaffold =
-        if (currentRouter != "Click" || currentRouter != All.聯絡我們.name) true else false
+    var showScaffold = if (currentRouter != "Click" && currentRouter != All.登入.name) true else false
 
     if (showScaffold) {
         ModalNavigationDrawer(
@@ -96,12 +95,12 @@ fun Change(viewModel: AllViewModel) {
                 Column(
                     modifier = Modifier.padding(innerPadding)
                 ) {
-                    ALLNavHost(Screen, viewModel)
+                    ALLNavHost(Screen, viewModel,db)
                 }
             }
         }
     } else {
-        ALLNavHost(Screen, viewModel)
+        ALLNavHost(Screen, viewModel,db)
     }
 }
 

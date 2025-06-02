@@ -1,6 +1,8 @@
 package com.example.a53test.ui.theme
 
 enum class All{
+    登入,
+    註冊,
     經營者,
     展館介紹,
     樓層立體圖,

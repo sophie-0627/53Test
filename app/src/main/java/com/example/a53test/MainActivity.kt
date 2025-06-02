@@ -15,17 +15,25 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
 import com.example.a53test.ui.theme.ART
 import com.example.a53test.ui.theme.AllViewModel
 import com.example.a53test.ui.theme.Change
+import com.example.a53test.ui.theme.UserClass
+import com.example.a53test.ui.theme.UserData
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val db = Room.databaseBuilder(
+                applicationContext,
+                UserData::class.java,
+                "user-db"
+            ).build()
             val viewModel:AllViewModel = viewModel()
-            Change(viewModel)
+            Change(viewModel,db)
         }
     }
 }
