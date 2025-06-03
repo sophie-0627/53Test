@@ -56,7 +56,7 @@ fun Change(viewModel: AllViewModel,db:UserData) {
 
     var currentBackStackEntry = Screen.currentBackStackEntryAsState()
     var currentRouter = currentBackStackEntry.value?.destination?.route
-    var showScaffold = if (currentRouter != "Click" && currentRouter != All.登入.name) true else false
+    var showScaffold = if (currentRouter != "Click" && currentRouter != All.登入.name && currentRouter != All.註冊.name) true else false
 
     if (showScaffold) {
         ModalNavigationDrawer(
