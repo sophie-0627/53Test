@@ -120,7 +120,7 @@ fun Login(navController: NavController,db:UserData) {
                     coroutine.launch {
                         val check = db.dao().Check(email,password)
                         if(check != null){
-                            navController.navigate(All.主畫面.name)
+                            navController.navigate(All.延遲.name)
                         } else {
                             Toast.makeText(context,"帳號密碼錯誤",Toast.LENGTH_SHORT).show()
                         }
